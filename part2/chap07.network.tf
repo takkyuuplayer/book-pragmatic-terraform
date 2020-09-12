@@ -157,3 +157,13 @@ resource "aws_route_table_association" "private_1" {
   subnet_id = aws_subnet.private_1.id
   route_table_id = aws_route_table.private_1.id
 }
+
+# Firewall
+
+module "example_sg" {
+    source = "./security_group"
+    name = "module-sg"
+    vpc_id = aws_vpc.example.id
+    port = 80
+    cidr_blocks = ["0.0.0.0/0"]
+}
