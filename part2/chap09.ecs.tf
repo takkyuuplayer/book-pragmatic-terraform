@@ -54,7 +54,7 @@ module "nginx_sg" {
 
 # Chap 9.4 Fargate Logging
 resource "aws_cloudwatch_log_group" "for_ecs" {
-    name = "/tcs/example"
+    name = "/ecs/example"
     retention_in_days = 180
 }
 data "aws_iam_policy" "ecs_task_execution_role_policy" {

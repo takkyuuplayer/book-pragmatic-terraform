@@ -20,7 +20,7 @@ output "domain_name" {
 
 # Chap8.4 ACM
 resource "aws_acm_certificate" "example" {
-  domain_name               = data.aws_route53_zone.example.name
+  domain_name               = "terraform.takkyuuplayer.com"
   subject_alternative_names = []
   validation_method         = "DNS"
 
