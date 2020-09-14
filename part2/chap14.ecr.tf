@@ -67,6 +67,7 @@ resource "aws_codebuild_project" "example" {
     service_role = module.codebuild_role.iam_role_arn
     source {
         type = "CODEPIPELINE"
+        buildspec = "part2/buildspec.yml"
     }
 
     artifacts {
