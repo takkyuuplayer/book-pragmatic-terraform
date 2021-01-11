@@ -1,27 +1,26 @@
 import * as cdk from "@aws-cdk/core";
 import * as iam from "@aws-cdk/aws-iam";
+import { FORMERR } from "dns";
+import { Policy, Role } from "@aws-cdk/aws-iam";
 
 interface IamRoleProps extends cdk.NestedStackProps {
   name: string;
   policy: iam.PolicyDocument;
   identifier: string;
 }
-export class IamRoleStack extends cdk.NestedStack {
-  constructor(scope: cdk.Construct, id: string, props: IamRoleProps) {
-    super(scope, id, props);
 
-    const role = new iam.Role(this, `${id}Role`, {
+export function IamRoleStack(scope: cdk.Construct, id: string, props: IamRoleProps): {
+    role: Role,
+    policy: Policy,
+} {
+    const role = new iam.Role(scope, `${id}Role`, {
       assumedBy: new iam.ServicePrincipal(props.identifier),
-    });
-    role.addToPolicy(
-      new iam.PolicyStatement({
-        resources: ["*"],
-        actions: ["sts:AssumeRole"],
-      })
-    );
+    })
 
-    const policy = new iam.Policy(this, `${id}Policy`, {
+    const policy = new iam.Policy(scope, `${id}Policy`, {
       document: props.policy,
     });
-  }
+    policy.attachToRole(role)
+
+    return { role, policy }
 }

@@ -6,7 +6,7 @@ export class IamStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    new IamRoleStack(this, "DescribeRegionForEc2", {
+    IamRoleStack(this, "DescribeRegionForEc2", {
       name: "describe-regions-for-ec2",
       identifier: "ec2.amazonaws.com",
       policy: new iam.PolicyDocument({
