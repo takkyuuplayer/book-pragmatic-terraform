@@ -2,6 +2,16 @@
 import "source-map-support/register";
 import * as cdk from "@aws-cdk/core";
 import { IamStack } from "../lib/chap05.iam";
+import { S3Stack } from "../lib/chap06.s3";
 
 const app = new cdk.App();
-new IamStack(app, "CdkStack");
+export class MyStack extends cdk.Stack {
+  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+    super(scope, id, props);
+
+    IamStack(this);
+    S3Stack(this);
+  }
+}
+
+new MyStack(app, "PragmaticTerraformByCDK");
