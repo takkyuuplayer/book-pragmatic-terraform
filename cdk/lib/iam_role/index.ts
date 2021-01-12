@@ -9,18 +9,22 @@ interface IamRoleProps extends cdk.NestedStackProps {
   identifier: string;
 }
 
-export function IamRoleStack(scope: cdk.Construct, id: string, props: IamRoleProps): {
-    role: Role,
-    policy: Policy,
+export function IamRoleStack(
+  scope: cdk.Construct,
+  id: string,
+  props: IamRoleProps
+): {
+  role: Role;
+  policy: Policy;
 } {
-    const role = new iam.Role(scope, `${id}Role`, {
-      assumedBy: new iam.ServicePrincipal(props.identifier),
-    })
+  const role = new iam.Role(scope, `${id}Role`, {
+    assumedBy: new iam.ServicePrincipal(props.identifier),
+  });
 
-    const policy = new iam.Policy(scope, `${id}Policy`, {
-      document: props.policy,
-    });
-    policy.attachToRole(role)
+  const policy = new iam.Policy(scope, `${id}Policy`, {
+    document: props.policy,
+  });
+  policy.attachToRole(role);
 
-    return { role, policy }
+  return { role, policy };
 }
