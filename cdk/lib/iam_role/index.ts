@@ -3,7 +3,7 @@ import * as iam from "@aws-cdk/aws-iam";
 import { FORMERR } from "dns";
 import { Policy, Role } from "@aws-cdk/aws-iam";
 
-interface IamRoleProps extends cdk.NestedStackProps {
+interface IamRoleProps {
   name: string;
   policy: iam.PolicyDocument;
   identifier: string;

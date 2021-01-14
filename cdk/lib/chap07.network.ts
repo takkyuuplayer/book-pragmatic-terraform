@@ -1,5 +1,6 @@
 import { Construct, Tags } from "@aws-cdk/core";
 import * as ec2 from "@aws-cdk/aws-ec2"
+import { SecurityGroupStack } from "./security_group";
 
 export function NetworkStack(scope: Construct) {
     const vpc = new ec2.Vpc(scope, "Example", {
@@ -21,8 +22,10 @@ export function NetworkStack(scope: Construct) {
     })
     Tags.of(vpc).add("Name", "example")
 
-    const sg = new ec2.SecurityGroup(scope, "IngressExample", {
+    const sg = SecurityGroupStack(scope, "example_sg", {
         vpc,
+        name: "module-sg",
+        port: 80,
+        cidrBlocks: ["0.0.0.0/0"]
     })
-    sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80))
 }
