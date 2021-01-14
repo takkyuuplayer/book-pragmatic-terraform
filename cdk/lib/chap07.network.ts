@@ -7,18 +7,6 @@ export function NetworkStack(scope: Construct) {
         cidr: "10.0.0.0/16",
         enableDnsSupport: true,
         enableDnsHostnames: true,
-        subnetConfiguration: [
-            {
-                cidrMask: 24,
-                name: "public",
-                subnetType: ec2.SubnetType.PUBLIC,
-            },
-            {
-                cidrMask: 24,
-                name: "private",
-                subnetType: ec2.SubnetType.PRIVATE,
-            },
-        ],
     })
     Tags.of(vpc).add("Name", "example")
 
