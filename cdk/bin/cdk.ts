@@ -3,6 +3,7 @@ import * as cdk from "@aws-cdk/core";
 import { IamStack } from "../lib/chap05.iam";
 import { S3Stack } from "../lib/chap06.s3";
 import { NetworkStack } from "../lib/chap07.network";
+import { AlbStack } from "../lib/chap08.albdns";
 require("dotenv").config();
 
 const app = new cdk.App();
@@ -16,8 +17,9 @@ export class MyStack extends cdk.Stack {
     );
 
     IamStack(this);
-    S3Stack(this);
-    NetworkStack(this);
+    const {logBucket } = S3Stack(this);
+    const { vpc } = NetworkStack(this);
+    AlbStack(this, { vpc, logBucket})
   }
 }
 
