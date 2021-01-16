@@ -1,8 +1,8 @@
-import * as cdk from "@aws-cdk/core";
-import * as elbv2 from "@aws-cdk/aws-elasticloadbalancingv2";
 import * as ec2 from "@aws-cdk/aws-ec2";
-import { Bucket } from "@aws-cdk/aws-s3";
+import * as elbv2 from "@aws-cdk/aws-elasticloadbalancingv2";
 import { ListenerAction } from "@aws-cdk/aws-elasticloadbalancingv2";
+import { Bucket } from "@aws-cdk/aws-s3";
+import * as cdk from "@aws-cdk/core";
 
 interface AlbProps {
     vpc: ec2.Vpc,
@@ -28,5 +28,8 @@ export function AlbStack(
             messageBody: "This is HTTP",
         })
     })
-    
+    new cdk.CfnOutput(scope, 'LBDNS', {
+        exportName: "AlbDnsName",
+        value: lb.loadBalancerDnsName,
+    })
 }
