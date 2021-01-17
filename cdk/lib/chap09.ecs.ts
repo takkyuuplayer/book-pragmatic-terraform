@@ -1,6 +1,8 @@
 import { SubnetType, Vpc } from "@aws-cdk/aws-ec2";
 import * as ecs from "@aws-cdk/aws-ecs";
+import { LogDriver } from "@aws-cdk/aws-ecs";
 import { ApplicationTargetGroup } from "@aws-cdk/aws-elasticloadbalancingv2";
+import { RetentionDays } from "@aws-cdk/aws-logs";
 import { Construct } from "@aws-cdk/core";
 import { SecurityGroupStack } from "./security_group";
 
@@ -17,11 +19,16 @@ export function EcsStack(scope: Construct, props: EcsProps): void {
   taskDefinition
     .addContainer("NginxTask", {
       image: ecs.ContainerImage.fromRegistry("nginx:latest"),
+      logging: LogDriver.awsLogs({
+        streamPrefix: "/ecs/example",
+        logRetention: RetentionDays.TWO_WEEKS,
+      }),
     })
     .addPortMappings({
       protocol: ecs.Protocol.TCP,
       containerPort: 80,
     });
+
   new ecs.FargateService(scope, "NginxFargate", {
     cluster,
     taskDefinition,
