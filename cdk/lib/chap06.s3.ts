@@ -3,7 +3,11 @@ import { AccountPrincipal, PolicyStatement } from "@aws-cdk/aws-iam";
 import * as s3 from "@aws-cdk/aws-s3";
 import * as cdk from "@aws-cdk/core";
 
-export function S3Stack(scope: cdk.Construct) {
+export function S3Stack(scope: cdk.Construct) : {
+  privateBucket: s3.Bucket,
+  publicBucket: s3.Bucket,
+  logBucket: s3.Bucket,
+} {
   const privateBucket = new s3.Bucket(scope, "privateBucket", {
     bucketName: "tp-private-pragmatic-terraform",
     versioned: true,
@@ -44,4 +48,7 @@ export function S3Stack(scope: cdk.Construct) {
       principals: [new AccountPrincipal("582318560864")],
     })
   );
+
+  return { privateBucket, publicBucket, logBucket }
+  
 }
