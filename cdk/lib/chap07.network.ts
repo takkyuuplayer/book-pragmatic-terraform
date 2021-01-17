@@ -7,6 +7,8 @@ export function NetworkStack(scope: Construct) {
     cidr: "10.0.0.0/16",
     enableDnsSupport: true,
     enableDnsHostnames: true,
+    maxAzs: 2,
+    natGateways: 1,
   });
   Tags.of(vpc).add("Name", "example");
 
