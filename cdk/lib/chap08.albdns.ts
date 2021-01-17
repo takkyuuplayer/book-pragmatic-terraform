@@ -19,7 +19,12 @@ interface AlbProps {
   logBucket: Bucket;
 }
 
-export function AlbStack(scope: cdk.Construct, props: AlbProps): void {
+export function AlbStack(
+  scope: cdk.Construct,
+  props: AlbProps
+): {
+  albTargetGroup: ApplicationTargetGroup;
+} {
   const lb = new elbv2.ApplicationLoadBalancer(scope, "LB", {
     vpc: props.vpc,
     loadBalancerName: "example",
@@ -70,20 +75,24 @@ export function AlbStack(scope: cdk.Construct, props: AlbProps): void {
     }),
   });
 
-  const tg = new ApplicationTargetGroup(scope, "exampleTargetGroup", {
-    targetType: TargetType.IP,
-    vpc: props.vpc,
-    port: 80,
-    protocol: elbv2.ApplicationProtocol.HTTPS,
-    deregistrationDelay: Duration.seconds(300),
-  });
+  const albTargetGroup = new ApplicationTargetGroup(
+    scope,
+    "exampleTargetGroup",
+    {
+      targetType: TargetType.IP,
+      vpc: props.vpc,
+      port: 80,
+      protocol: elbv2.ApplicationProtocol.HTTP,
+      deregistrationDelay: Duration.seconds(300),
+    }
+  );
   listener.addTargetGroups("example", {
-    targetGroups: [tg],
+    targetGroups: [albTargetGroup],
   });
   new ApplicationListenerRule(scope, "exampleApplicationListenerRule", {
     listener,
     priority: 100,
-    action: ListenerAction.forward([tg], {}),
+    action: ListenerAction.forward([albTargetGroup], {}),
     conditions: [ListenerCondition.pathPatterns(["/*"])],
   });
 
@@ -91,4 +100,8 @@ export function AlbStack(scope: cdk.Construct, props: AlbProps): void {
     exportName: "DomainName",
     value: rec.domainName,
   });
+
+  return {
+    albTargetGroup,
+  };
 }
