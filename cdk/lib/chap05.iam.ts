@@ -1,5 +1,5 @@
-import * as cdk from "@aws-cdk/core";
 import * as iam from "@aws-cdk/aws-iam";
+import * as cdk from "@aws-cdk/core";
 import { IamRoleStack } from "./iam_role/index";
 
 export function IamStack(scope: cdk.Construct) {

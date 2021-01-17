@@ -1,10 +1,5 @@
-import { countResources } from "@aws-cdk/assert";
 import * as iam from "@aws-cdk/aws-iam";
-import {
-  AccountPrincipal,
-  AnyPrincipal,
-  PolicyStatement,
-} from "@aws-cdk/aws-iam";
+import { AccountPrincipal, PolicyStatement } from "@aws-cdk/aws-iam";
 import * as s3 from "@aws-cdk/aws-s3";
 import * as cdk from "@aws-cdk/core";
 

@@ -1,7 +1,6 @@
-import * as cdk from "@aws-cdk/core";
 import * as iam from "@aws-cdk/aws-iam";
-import { FORMERR } from "dns";
 import { Policy, Role } from "@aws-cdk/aws-iam";
+import * as cdk from "@aws-cdk/core";
 
 interface IamRoleProps {
   name: string;
