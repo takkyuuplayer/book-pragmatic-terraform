@@ -36,3 +36,4 @@ override.tf.json
 .envrc
 
 # End of https://www.toptal.com/developers/gitignore/api/direnv
+cdk.context.json

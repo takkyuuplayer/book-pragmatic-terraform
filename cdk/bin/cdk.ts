@@ -17,9 +17,9 @@ export class MyStack extends cdk.Stack {
     );
 
     IamStack(this);
-    const {logBucket } = S3Stack(this);
+    const { logBucket } = S3Stack(this);
     const { vpc } = NetworkStack(this);
-    AlbStack(this, { vpc, logBucket})
+    AlbStack(this, { vpc, logBucket });
   }
 }
 
