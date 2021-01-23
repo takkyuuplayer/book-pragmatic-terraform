@@ -7,6 +7,7 @@ import { AlbStack } from "../lib/chap08.albdns";
 import { EcsStack } from "../lib/chap09.ecs";
 import { BatchStack } from "../lib/chap10.batch";
 import { KmsStack } from "../lib/chap11.kms";
+import { SsmStack } from "../lib/chap12.ssm";
 require("dotenv").config();
 
 const app = new cdk.App();
@@ -26,6 +27,7 @@ export class MyStack extends cdk.Stack {
     EcsStack(this, { vpc, albTargetGroup });
     BatchStack(this, { vpc });
     KmsStack(this);
+    SsmStack(this, { vpc });
   }
 }
 
