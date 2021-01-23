@@ -27,6 +27,7 @@
     "@aws-cdk/aws-elasticloadbalancingv2": "^1.86.0",
     "@aws-cdk/aws-events": "^1.86.0",
     "@aws-cdk/aws-iam": "^1.86.0",
+    "@aws-cdk/aws-kms": "^1.86.0",
     "@aws-cdk/aws-route53": "^1.86.0",
     "@aws-cdk/aws-route53-targets": "^1.86.0",
     "@aws-cdk/aws-s3": "^1.86.0",
