@@ -5,6 +5,7 @@ import { S3Stack } from "../lib/chap06.s3";
 import { NetworkStack } from "../lib/chap07.network";
 import { AlbStack } from "../lib/chap08.albdns";
 import { EcsStack } from "../lib/chap09.ecs";
+import { BatchStack } from "../lib/chap10.batch";
 require("dotenv").config();
 
 const app = new cdk.App();
@@ -22,6 +23,7 @@ export class MyStack extends cdk.Stack {
     const { vpc } = NetworkStack(this);
     const { albTargetGroup } = AlbStack(this, { vpc, logBucket });
     EcsStack(this, { vpc, albTargetGroup });
+    BatchStack(this, { vpc });
   }
 }
 
