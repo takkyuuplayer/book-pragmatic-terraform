@@ -8,6 +8,7 @@ import { EcsStack } from "../lib/chap09.ecs";
 import { BatchStack } from "../lib/chap10.batch";
 import { KmsStack } from "../lib/chap11.kms";
 import { SsmStack } from "../lib/chap12.ssm";
+import { DatastoreStack } from "../lib/chap13.db";
 require("dotenv").config();
 
 const app = new cdk.App();
@@ -26,8 +27,9 @@ export class MyStack extends cdk.Stack {
     const { albTargetGroup } = AlbStack(this, { vpc, logBucket });
     EcsStack(this, { vpc, albTargetGroup });
     BatchStack(this, { vpc });
-    KmsStack(this);
-    SsmStack(this, { vpc });
+    const { key } = KmsStack(this);
+    const { credentials } = SsmStack(this, { vpc });
+    DatastoreStack(this, { key, credentials, vpc });
   }
 }
 

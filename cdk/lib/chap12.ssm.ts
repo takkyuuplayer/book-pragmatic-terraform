@@ -10,7 +10,15 @@ import * as cdk from "@aws-cdk/core";
 interface BatchProps {
   vpc: ec2.Vpc;
 }
-export function SsmStack(scope: cdk.Construct, props: BatchProps) {
+export function SsmStack(
+  scope: cdk.Construct,
+  props: BatchProps
+): {
+  credentials: {
+    username: ssm.StringParameter;
+    password: secretsmanager.Secret;
+  };
+} {
   const plain = new ssm.StringParameter(scope, "ExamplePlainText", {
     parameterName: "/db/username",
     stringValue: "root",
@@ -18,6 +26,9 @@ export function SsmStack(scope: cdk.Construct, props: BatchProps) {
   const secret = new secretsmanager.Secret(scope, "Secret", {
     secretName: "/db/password",
     removalPolicy: cdk.RemovalPolicy.DESTROY,
+    generateSecretString: {
+      excludeCharacters: "!@#$%^&*",
+    },
   });
   const cluster = new ecs.Cluster(scope, "ExampleSsmBatch", { vpc: props.vpc });
   new ecspatterns.ScheduledFargateTask(scope, "EnvTask", {
@@ -36,4 +47,11 @@ export function SsmStack(scope: cdk.Construct, props: BatchProps) {
     },
     schedule: events.Schedule.expression("rate(1 minute)"),
   });
+
+  return {
+    credentials: {
+      username: plain,
+      password: secret,
+    },
+  };
 }
