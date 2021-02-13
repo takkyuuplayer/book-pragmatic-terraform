@@ -2,7 +2,6 @@ import * as ecr from "@aws-cdk/aws-ecr";
 import { TagStatus } from "@aws-cdk/aws-ecr";
 import { CfnAccessKey, ManagedPolicy, User } from "@aws-cdk/aws-iam";
 import * as cdk from "@aws-cdk/core";
-import { CfnOutput } from "@aws-cdk/core";
 
 export function CIStack(scope: cdk.Construct) {
   new ecr.Repository(scope, "Repository", {
@@ -30,8 +29,8 @@ export function CIStack(scope: cdk.Construct) {
   const accessKey = new CfnAccessKey(scope, "myAccessKey", {
     userName: deployUser.userName,
   });
-  new CfnOutput(scope, "accessKeyId", { value: accessKey.ref });
-  new CfnOutput(scope, "secretAccessKey", {
-    value: accessKey.attrSecretAccessKey,
-  });
+  // new CfnOutput(scope, "accessKeyId", { value: accessKey.ref });
+  // new CfnOutput(scope, "secretAccessKey", {
+  //   value: accessKey.attrSecretAccessKey,
+  // });
 }
