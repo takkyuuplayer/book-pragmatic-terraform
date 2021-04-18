@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - cdk
-      - chap14
 
 defaults:
   run:
