@@ -9,6 +9,7 @@ import { BatchStack } from "../lib/chap10.batch";
 import { KmsStack } from "../lib/chap11.kms";
 import { SsmStack } from "../lib/chap12.ssm";
 import { DatastoreStack } from "../lib/chap13.db";
+import { CIStack } from "../lib/chap14.ci";
 require("dotenv").config();
 
 const app = new cdk.App();
@@ -30,6 +31,7 @@ export class MyStack extends cdk.Stack {
     const { key } = KmsStack(this);
     const { credentials } = SsmStack(this, { vpc });
     DatastoreStack(this, { key, credentials, vpc });
+    CIStack(this);
   }
 }
 
